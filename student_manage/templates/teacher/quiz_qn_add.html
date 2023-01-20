@@ -1,0 +1,128 @@
+{% extends "header.html" %}
+{% load static %}
+
+{% block body %}
+
+<section class='index my-3 '>
+    <div class="row admin ">
+        {% include "msg.html" %}
+        <div class="col-6 col-md-8">
+            <h1>Quize</h1>
+
+            <span>
+                <span>Question / <span class="text-secondary">Question add</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'quiz_list' %}" class="btn btn-danger"> Back  </a>
+
+        </div>
+    </div>
+</section>
+
+<section class='row quiz_qn_fm'>
+    <div class="col-md-6">
+       
+        <form action="" method="post" class='shadow-sm p-3 mb-5 bg-white rounded'>
+            {% csrf_token %}
+            {{qn_fm}}
+            
+            <div class="ans_fm mt-4">
+                <div class="row my-2">
+                    <div class="col-10"><input type="text"  name='ans' class='form-control w-100 ans_inp' placeholder="Answer 1" required></div>
+                    <div class="col-2"><input type="checkbox" name="check_inp1"  class='form-control'></div>
+                </div>
+
+                <div class="row my-2">
+                    <div class="col-10"><input type="text"  name='ans' class='form-control w-100 ans_inp' placeholder="Answer 2" required></div>
+                    <div class="col-2"><input type="checkbox" name="check_inp2"  class='form-control'></div>
+                </div>
+
+                <div class="row my-2">
+                    <div class="col-10"><input type="text"  name='ans' class='form-control w-100 ans_inp' placeholder="Answer 3" required></div>
+                    <div class="col-2"><input type="checkbox" name="check_inp3"  class='form-control'></div>
+                </div>
+
+                <div class="row my-2">
+                    <div class="col-10"><input type="text"  name='ans' class='form-control w-100 ans_inp' placeholder="Answer 4" required></div>
+                    <div class="col-2"><input type="checkbox" name="check_inp4"  class='form-control'></div>
+                </div>
+
+                <div>
+            
+                    
+                        
+             
+                </div>
+            </div>
+            {% if count_condition %}
+            <span class='text-danger'>Number of Question is full** </span>
+            {% else %}
+            <button type="submit" class='btn btn-primary my-1'>save</button>
+            {% endif %}
+           
+        </form>
+    </div>
+    <div class="col-md-6 ">
+     <div class="mb-4"> <span class="text-success border border-success p-1">Total result : {{data.count}}</span></div>
+     {% for i in data %}
+     
+     
+       <div class="card w-100">
+        <div class="card-body">
+          <h5 class="card-title"><span class='text-dark'>{{forloop.counter}}</span>.  &nbsp;{{i.text}}</h5>
+          {% for j in i.quiz_ans_set.all %}
+          <ul>
+            
+            <li class="card-text {% if j.correct %}bg-warning text-dark pl-1{% endif %}">{{j.text}}</li>
+          </ul>
+
+        {% endfor %}
+         
+      
+   
+
+          <a href="{% url 'teacher_quiz_qn_view' i.id %}" class="btn btn-primary">View</a>
+          
+          <!-- Button trigger modal -->
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{forloop.counter}}">
+ Remove
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><span>{{forloop.counter}}</span>.  &nbsp;{{i.text}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <span class="text-danger">Confrom remove</span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="{% url 'teacher_quiz_qn_delete' i.id %}" class="btn btn-danger">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+        </div>
+      </div>
+     {% endfor %}
+
+
+    </div>
+</section>
+
+
+
+
+
+
+
+
+{% endblock body %}

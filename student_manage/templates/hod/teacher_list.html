@@ -1,0 +1,184 @@
+{% extends "header.html" %}
+{% load static %}
+{% block body %}
+
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Teacher</h1>
+
+            <span>
+                <span>Teacher / <span class="text-secondary">Teacher list</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'teacher_add' %}" class="btn btn-warning"> add Teachers <i class="fas fa-plus"></i></a>
+
+        </div>
+    </div>
+</section>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-table">
+            <div class="card-body">
+                <span class='text-success border border-success p-1'>Total result : {{data.count}}</span>
+                <div class="row">
+                    <div class="col-12">
+                        <form action="" class='form-inline' method="post">
+                            {% csrf_token %}
+                            <input class="form-control my-2 form-group" id='search_input' name='search' type="search"
+                            placeholder="Search or filter" aria-label="Search"> <button class='form-group btn btn-primary ml-2 '  type="submit">Search</button>
+                        </form>
+
+
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                               
+                            </div>
+                            <div class="col-sm-12 col-md-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover table-center mb-0 datatable dataTable no-footer"
+                                    id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="ID: activate to sort column ascending"
+                                                style="width: 45.125px;">Teacher ID</th>
+                                            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Name: activate to sort column descending"
+                                                style="width: 172.9px;" aria-sort="ascending">Name</th>
+
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Class: activate to sort column ascending"
+                                                style="width: 42.2125px;">Member of Branch</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Class: activate to sort column ascending"
+                                                style="width: 42.2125px;">Member of Course</th>
+
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="DOB: activate to sort column ascending"
+                                                style="width: 74.825px;">Email</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="DOB: activate to sort column ascending"
+                                                style="width: 74.825px;">DOB</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Parent Name: activate to sort column ascending"
+                                                style="width: 102.2px;">Teacher ph </th>
+
+
+
+
+
+
+
+                                            <th class="text-end sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Action: activate to sort column ascending"
+                                                style="width: 74.15px;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+
+
+                                        {% for i in data %}
+                                        <tr role="row" class="odd">
+
+                                            <td class="">{{i.teacher_id}}</td>
+                                            <td class="sorting_1">
+                                                <h2 class="table-avatar">
+                                                    <a href="{% url 'teacher_details' i.pk %}"
+                                                        class="avatar avatar-sm me-2">
+
+                                                        <img class="avatar-img rounded-circle mr-1" height="40px"
+                                                            width="40px" src="
+                                                        {% if i.admin.profile_image %}
+                                                        {{i.admin.profile_image.url}}
+                                                        {% else %}
+                                                        {% static 'default_dp.jpg' %}
+                                                        {% endif %}
+                                                        " alt="lode">{{i.admin.first_name}}
+                                                        {{i.admin.last_name}}</a>
+                                                </h2>
+                                            </td>
+
+                                            <td> {% if i.branch %}{{i.branch.name}} {% else %} <span class="text-danger">Not mention</span> {% endif %} </td>
+                                            <td> {% if i.course %}{{i.course.name}} {% else %} <span class="text-danger">Not mention</span> {% endif %} </td>
+
+                                            <td>{{i.admin.email}}</td>
+                                            <td>{% if i.dob %}
+                                                {{i.dob}}
+                                                {% else %}
+                                                NULL
+                                                {% endif %} </td>
+                                            <td>{% if i.ph %}
+                                                {{i.ph}}
+                                                {% else %}
+                                                NULL
+                                                {% endif %} </td>
+
+
+
+                                            <td class="text-end">
+                                                <div class="actions">
+                                                    <a href="{% url 'teacher_update' i.pk %}"
+                                                        class="btn btn-sm btn-warning bg-success-light me-2">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
+
+                                                    <a href="{% url 'teacher_remove' i.admin.id %}">
+                                                        <button type="button" class="btn btn-sm bg-danger-light btn-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal">
+                                                        <i class="fas fa-trash"></i> 
+                                                    </button>
+                                                    </a>
+                                                    <!-- Remove Dropbox(Modal)  -->
+
+
+                                        
+
+
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+
+                                        {% endfor %}
+
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+
+</div>
+
+{% endblock body %}

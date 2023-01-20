@@ -1,0 +1,294 @@
+{% extends 'header.html' %}
+{% load static %}
+{% load simpletag %}
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Group discussion</h1>
+
+            <span>
+                <span>Group discussion / <span class="text-secondary">{% gd_student request.user %}</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+
+
+
+            <a href="{% url 'student_group_discuss_add' %}" class="btn btn-primary">Add content</a>
+
+        </div>
+    </div>
+</section>
+
+<section>
+    {% for i in data %}
+
+    <section>
+        <div class="row">
+
+
+
+
+            {% comment %} If Own user {% endcomment %}
+            {% if i.user.admin == request.user %}
+            <div class="col-7  offset-4 my-2 text-right round " style="background: #aedf758a;">
+
+
+                <div class='my-3 '>
+
+                    <span class='text-dark ml-2'><i class="far fa-clock"></i> {{i.date}}</span>
+                </div>
+
+                {{i.text|safe}}
+
+                {% if i.image %}
+                <img src="{% if i.image %}
+                    {{i.image.url}}
+                    {% endif %}" style="width: 100%;" alt="">
+                {% endif %}
+
+                {% if i.image %}
+                <a href="{{i.image.url}}" download class="btn btn-outline-success my-1"><i
+                        class="fa-solid fa-download"></i></a>
+                {% endif %}
+
+                <!-- Button sent replay modal -->
+                <button type="button" class='btn btn-outline-dark' data-toggle="modal"
+                    data-target="#exampleModal{{forloop.counter}}"> <i class="fa-solid fa-share "></i></button>
+
+                <!-- Button Remove modal -->
+
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                    data-target=".bd-example-modal-sm{{forloop.counter}}"><i class="fas fa-trash"></i></button>
+
+                <div class="modal fade bd-example-modal-sm{{forloop.counter}}" tabindex="-1" role="dialog"
+                    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <span class='text-danger'>Conform remove</span>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <a href="{% url 'gd_discuss_remove' i.id %}" class="btn btn-danger">Remove</a>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <!-- Replay seen -->
+                {% gd_student_replays i as data %}
+                {% if data %}
+                <button type="button" class='btn btn-outline-none' data-toggle="modal"
+                    data-target="#exampleModal_replay{{forloop.counter}}"><b>view {{data.count}} Replay</b></button>
+                <!-- Modal for see replay  -->
+                <div class="modal fade bd-example-modal-lg" id="exampleModal_replay{{forloop.counter}}" tabindex="-1"
+                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{i.text|truncatewords:10|safe}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {% for i in data %}
+                                <div class='mb-4 bg-light p-1'>
+                                    <p><b>{{i.user.admin.first_name|capfirst}} {{i.user.admin.last_name}}..</b> <span
+                                            class='text-muted ml-2'><i class="far fa-clock"></i> {{i.date}}</span></p>
+                                    <p>{{i.text}}</p>
+                                    {% if i.image %}
+                                    <img src="{{i.image.url}}" style="width:70%;" alt="">
+                                    {% endif %}
+
+                                    {% if i.user.admin.username == request.user.username %}
+                                    <div><a href="{% url 'group_discuss_replay_remove' i.id %}" class='text-danger '><i
+                                                class="fas fa-trash"></i></a></div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Modal for replay message -->
+                <div class="modal fade bd-example-modal-lg" id="exampleModal{{forloop.counter}}" tabindex="-1"
+                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6 class="modal-title" id="exampleModalLabel">{{i.text|truncatewords:5|safe}}</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{% url 'student_group_discuss_replay' i.id %}" method="post"
+                                    enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{replay_gd.as_p}}
+
+                                    <button type="submit" class='btn btn-primary'>Replay</button>
+                                </form>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+            {% else %}
+
+
+
+
+            {% comment %} If Other user {% endcomment %}
+            <div class="col-7 offset-1   shadow-sm  my-2 rounded " style="background: #dedede;">
+                <div class='my-3'>
+                    <a href="#" class="avatar avatar-sm me-2 ">
+
+                        <img class="avatar-img rounded-circle mr-1" height="30px" width="30px" src="
+                        
+                          {% if i.user.admin.profile_image %}
+                          {{i.user.admin.profile_image.url}}
+                          {% else %}
+                          {% static 'default_dp.jpg' %}
+                          {% endif %}
+                        
+                        " alt="lode"> <b>{{i.user.admin.first_name|capfirst}} {{i.user.admin.last_name}} </b>
+
+                        <span class='text-dark ml-2'><i class="far fa-clock"></i> {{i.date}}</span>
+                    </a>
+                </div>
+
+
+                {{i.text|safe}}
+
+                {% if i.image %}
+                <img src="{% if i.image %}
+                    {{i.image.url}}
+                    {% endif %}" style="width: 100%;" alt="">
+                {% endif %}
+
+
+                {% if i.image %}
+                <a href="{{i.image.url}}" download class="btn btn-outline-success my-1"><i
+                        class="fa-solid fa-download"></i></a>
+                {% endif %}
+
+
+                <!-- Button trigger modal -->
+                <button type="button" class='btn btn-outline-dark' data-toggle="modal"
+                    data-target="#exampleModal{{forloop.counter}}"> <i class="fa-solid fa-share "></i></button>
+
+                <!-- Replay -->
+                <br>
+                {% gd_student_replays i as data %}
+                {% if data %}
+
+                <button type="button" class='btn btn-outline-none' data-toggle="modal"
+                    data-target="#exampleModal_replay{{forloop.counter}}"><b>view {{data.count}} Replay</b></button>
+                <!-- Modal for see replay -->
+                <div class="modal fade bd-example-modal-lg" id="exampleModal_replay{{forloop.counter}}" tabindex="-1"
+                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{i.text|truncatewords:10|safe}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {% for i in data %}
+                                <div class="mb-4 bg-light p-1">
+                                    <p><b>{{i.user.admin.first_name|capfirst}} {{i.user.admin.last_name}}..</b> <span
+                                            class='text-muted ml-2'><i class="far fa-clock"></i> {{i.date}}</span></p>
+                                    <p>{{i.text}}</p>
+                                    {% if i.image %}
+                                    <img src="{{i.image.url}}" style="width:70%;" alt="">
+                                    {% endif %}
+
+
+
+                                    {% if i.user.admin.username == request.user.username %}
+                                    <div><a href="{% url 'group_discuss_replay_remove' i.id %}" class='text-danger '><i
+                                                class="fas fa-trash"></i></a></div>
+                                    {% endif %}
+                                </div>
+
+
+                                {% endfor %}
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Modal for replay message -->
+                <div class="modal fade bd-example-modal-lg" id="exampleModal{{forloop.counter}}" tabindex="-1"
+                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{i.text|truncatewords:10|safe}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{% url 'student_group_discuss_replay' i.id %}" method="post"
+                                    enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{replay_gd.as_p}}
+
+                                    <button type="submit" class='btn btn-primary'>Replay</button>
+                                </form>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                {% endif %}
+
+            </div>
+    </section>
+    {% endfor %}
+
+</section>
+{% endblock body %}

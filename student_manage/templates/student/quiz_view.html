@@ -1,0 +1,60 @@
+{% extends "header.html" %}
+{% load static %}
+
+{% block body %}
+
+<section class='index my-3 '>
+    <div class="row admin ">
+        {% include "msg.html" %}
+        <div class="col-6 col-md-8">
+            <h1>Quize</h1>
+
+            <span>
+                <span>Question / <span class="text-secondary">Question View</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'student_quiz' %}" class="btn btn-danger"> Back </a>
+
+        </div>
+    </div>
+</section>
+
+<section class='row quiz_qn_fm'>
+
+    <div class="col-md-12 ">
+        <div class="mb-4"> <span class="text-success border border-success p-1">Total result : {{data.count}}</span>
+        </div>
+        {% for i in data %}
+
+
+        <div class="card w-100">
+            <div class="card-body">
+                <h5 class="card-title"><span class='text-dark'>{{forloop.counter}}</span>. &nbsp;{{i.text}}</h5>
+                {% for j in i.quiz_ans_set.all %}
+                <ul>
+
+                    <li class="card-text {% if j.correct %}bg-warning text-dark pl-1{% endif %}">{{j.text}}</li>
+                </ul>
+
+                {% endfor %}
+
+
+          
+            </div>
+        </div>
+        {% endfor %}
+
+
+    </div>
+</section>
+
+
+
+
+
+
+
+
+{% endblock body %}

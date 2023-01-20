@@ -1,0 +1,59 @@
+{% extends "header.html" %}
+{% load simpletag %}
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Assignment</h1>
+
+            <span>
+                <span>Assignment / <span class="text-secondary">Assignment List</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+             <a href="{% url 'student_assignment_result' %}" class='btn btn-primary'>Check result</a>
+        </div>
+    </div>
+</section>
+
+<section>
+    <button class='btn btn-outline-success'>Total result : {{data.count}}</button>
+    {% include "msg.html" %}
+    {% for i in data %}
+ 
+    <div class="card my-3 shadow-sm p-3 mb-5 bg-white rounded">
+        <h5 class="card-header bg-info text-white">{{i.subject.name|title}}</h5>
+        <div class="card-body">
+          <h5 class="card-title">{{i.topic|capfirst}}</h5>
+          <ul>
+            <li><b>Course : </b>{{i.subject.course.name|capfirst}}</li>
+            <li><b>Branch : </b>{{i.subject.branch.name|capfirst}}</li>
+            <li><b>Sem : </b>{{i.sem}}</li>
+            <li><b>Online : </b> {% if i.online %} <span class="text-primary"><i class="fa-sharp fa-solid fa-check mr-1"></i></span> {% else %} <span class="text-danger"><i class="fa-sharp fa-solid fa-not-equal mr-1"></i></span>  {% endif %} </li>
+            <li><b>Offline : </b> {% if i.offline %} <span class="text-primary"><i class="fa-sharp fa-solid fa-check mr-1"></i></span> {% else %} <span class="text-danger"><i class="fa-sharp fa-solid fa-not-equal mr-1"></i></span>  {% endif %} </li>
+            <li><b>Last date : </b> <span class='text-danger'>{{i.last_date}}</span></li>
+            <li><b>ASSIGNMENT STATUS : </b> {% if i.assignment_start %} <span class='text-primary'> Continue.. </span>  {% else %} <span class='text-danger'><i class="fa-solid fa-hand"></i> Stop </span>{% endif %}</li>
+          </ul>
+        
+    
+    
+          {%  student_assignment_check request.user i.id as condition %}
+
+          {% if condition %}
+          <a href="{% url 'student_assignment_edit' i.id %}" class="btn btn-success">Edit</a>
+           {% else %}
+           <a href="{% url 'student_assignment_view' i.id %}" class="btn btn-primary">Report submit</a>
+          {% endif %}
+        
+
+  
+          
+        </div>
+    </div>
+
+
+    {% endfor %}
+</section>
+
+{% endblock body %}

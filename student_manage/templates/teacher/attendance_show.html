@@ -1,0 +1,89 @@
+{% extends "header.html" %}
+{% load simpletag %}
+{% block body %}
+<section class='index my-3 '>
+  <div class="row admin ">
+      <div class="col-6 col-md-8">
+          <h1>Teacher</h1>
+
+          <span>
+              <span>Attendance / <span class="text-secondary">Attendance list</span></span>
+          </span>
+
+      </div>
+      <div class="col-6 col-md-2 mt-3 ">
+          <a href="{% url 'take_attendance' %}" class="btn btn-success"> Back </a>
+
+      </div>
+  </div>
+</section>
+<table class="table table-hover  ">
+    <thead>
+        <tr>
+
+
+            <th scope="col">No</th>
+
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Course</th>
+            <th scope="col">Branch</th>
+   
+            <th scope="col">View</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for i in data %}
+
+        <tr>
+
+            <td class='text-dark'>{{forloop.counter}}</td>
+
+            <td><b>{{i.admin.first_name}} {{i.subject.name}}</b></td>
+            <td>{{i.date}}</td>
+            <td> {% if i.subject.course.name == "" or i.subject.course.name == null %} Not memtion {% else %}{{i.subject.course.name}}{% endif %} </td>
+            <td> {% if i.subject.branch.name == "" or i.subject.branch.name == null %} Not memtion {% else %}{{i.subject.branch.name}}{% endif %} </td>
+          
+
+           
+            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg{{forloop.counter}}">View</button></td>
+
+            <div class="modal fade bd-example-modal-lg{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+               
+                  <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Students list</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+
+                      <div class="modal-body">
+                      {% attendance_student i.id as data %}
+                      {% for j in data %}
+                      
+                       <h6><b>{{j.student.admin.username}}.<span class="text text-primary">{{j.student.admin.first_name}} {{j.student.admin.last_name}}</span></b></h6>
+
+                      {% endfor %}
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                      </div>
+                  </div>
+
+                </div>
+              </div>
+        </tr>
+        {% empty %}
+        <marquee behavior="" direction=""><span class='text-danger'>Empty class</span></marquee>
+        {% endfor %}
+
+    </tbody>
+
+</table>
+{% endblock body %}

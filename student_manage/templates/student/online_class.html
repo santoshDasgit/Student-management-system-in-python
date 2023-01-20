@@ -1,0 +1,76 @@
+{% extends "header.html" %}
+{% load simpletag %}
+{% block body %}
+
+<section style="width: 100%; overflow-x:scroll;">
+    <section class='index my-3 '>
+        <div class="row admin ">
+            <div class="col-6 col-md-8">
+                <h1>Student</h1>
+    
+                <span>
+                    <span>Class / <span class="text-secondary">Online class</span></span>
+                </span>
+    
+            </div>
+            
+        </div>
+    </section>
+
+    <table class="table table-hover shadow p-3 mb-5 bg-body rounded ">
+        <thead>
+            <tr>
+    
+    
+                <th scope="col">No</th>
+    
+                <th scope="col">Subject</th>
+                <th scope="col">Course</th>
+                <th scope="col">Branch</th>
+                <th scope="col">Teacher</th>
+                <th scope="col">Join date</th>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+                <th scope="col">Views</th>
+    
+            </tr>
+        </thead>
+        <tbody>
+       
+            {% for i in data %}
+       
+            {% if i.subject.course == student.course and i.subject.branch == student.branch and i.semester == student.semester %}
+            
+           
+            <tr>
+    
+                <td class='text-dark'>{{forloop.counter}}</td>
+                <td><b>{{i.subject.name}}</b></td>
+                <td>{{i.subject.course}}</td>  
+                <td>{{i.subject.branch}}</td>
+                  <td><a href="{% url 'student_see_teacher_details' i.user.admin.id %}">{{i.user.admin.first_name}} {{i.user.admin.last_name}}</a></td>
+                 
+                  <td>{{i.date}}</td>
+                  <td>{{i.start_time}}</td>
+                  <td>{{i.end_time}}</td>
+                  <td>
+                    {% if i.status %}
+                    <a target="_blank" href="{{i.link}}" class='btn btn-primary'>Start now</a>
+                    {% else %}
+                    <button type="button" class="btn btn-secondary" disabled>start soon</button>
+                    {% endif %}
+                  </td> 
+                </tr>
+                {% endif %}
+              
+
+          
+            {% endfor %}
+    
+        </tbody>
+    
+    </table>
+    
+</section>
+{% endblock body %}
+

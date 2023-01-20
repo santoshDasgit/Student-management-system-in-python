@@ -1,0 +1,12 @@
+{% extends 'header.html' %}
+
+{% block body %}
+<form action="" method="post" class='shadow p-3 mb-5 bg-white rounded'>
+    {% include 'msg.html' %}
+    {% csrf_token %}
+    {{fm.as_p}}
+
+    <a href="{% url 'routine_show' %}" class='btn btn-danger'>Back</a>
+    <button type="submit" class='btn btn-primary'>Changed</button>
+</form>
+{% endblock body %}

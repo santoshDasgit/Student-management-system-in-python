@@ -1,0 +1,114 @@
+{% extends 'header.html' %}
+
+{% block body %}
+<section class='index my-5'>
+    <div class="row admin">
+        <div class="col-12">
+            <h1>HOD Settings</h1>
+
+            <span>Settings</span><span class='mx-2'>/</span><span class='text-secondary'> Settings</span>
+
+        </div>
+    </div>
+</section>
+
+
+<section>
+    {% include "msg.html" %}
+</section>
+
+
+
+
+<section class="shadow p-3 mb-5 bg-white rounded">
+    <form action="{% url 'changed_branch_setting' %}" method="post">
+        {% csrf_token %}
+       <b>BRANCH UPDATE : </b>
+        <div class="row">
+            <div class="col-md-12">
+                <select name="course_set_for_sem" class='form-control'>
+                    <option value="no">Select branch</option>
+                    {% for i in course %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-6">
+                <label for="">Corent semestar</label>
+                <select class='form-control' name='current_sem'>
+                    {% for i in sem %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+            <div class="col-6">
+                <label for="">Update semestar</label> <br>
+                <select class='form-control' name='update_sem'>
+                    {% for i in sem %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type='submit' class='btn btn-primary my-2'>Changed</button>
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+    <form method="post" action='setting_remove__last_year_student' class="mt-5 ">
+        {% csrf_token %}
+        <b >REMOVE LAST YEAR STUDENT'S : </b>
+        <select  id="" name='sem' class='form-control'>
+            <option value="">Select Semester</option>
+            {% for i in sem %}
+            <option value="{{i.id}}">{{i.name}}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="">Course</label>
+        <select  id="" name='course' class='form-control'>
+            <option value="">Select course</option>
+            {% for i in course %}
+            <option value="{{i.id}}">{{i.name}}</option>
+            {% endfor %}
+        </select>
+    
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger my-3" data-toggle="modal" data-target="#exampleModal">
+            Remove all last year student <i class="fa-solid fa-trash ml-3"></i>
+        </button>
+    
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <span class="text-danger">Conform to remove if one's remove your all filtering data will be destroys</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Conform</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+{% endblock body %}

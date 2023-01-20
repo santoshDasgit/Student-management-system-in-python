@@ -1,0 +1,110 @@
+{% extends "header.html" %}
+{% load simpletag %}
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Quiz</h1>
+
+            <span>
+                <span>Quiz / <span class="text-secondary">Quiz List</span></span>
+            </span>
+
+        </div>
+
+    </div>
+</section>
+
+<section style="width: 100%; overflow-x: scroll;">
+    <b>Test details</b>
+    <table class="table table-striped  table-hover">
+        <thead>
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Topic</th>
+                <th scope="col">Teacher</th>
+                <th scope="col">No of qn</th>
+                <th scope="col">Time durection</th>
+                <th scope="col">Pass mark</th>
+                <th scope="col">Difficults</th>
+                <th scope="col">Views</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for i in data %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{i.topic|capfirst}}</td>
+                <td>{{i.name.admin.first_name|capfirst}} {{i.name.admin.last_name}}</td>
+                <td>{{i.num_of_qn }}</td>
+                <td>{{i.time_duration }} min</td>
+                <td>{{i.pass_mark}}%</td>
+                <td>{{i.difficulty}}</td>
+                {% if i.show_qn %}
+                <td><a href="{% url 'student_quiz_qn_test' i.id %}" class='btn btn-primary'>Strat</a></td>
+                {% else %}
+                <td>starting soon..</td>
+                {% endif %}
+
+            </tr>
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+
+    
+</section>
+
+
+
+<section style="width: 100%; overflow-x: scroll;" class='my-5'>
+    <b>Result Details</b>
+    <table class="table table-striped  table-hover">
+        <thead>
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Topic</th>
+                <th scope="col">Candidate name</th>
+                <th scope="col">Total  mark</th>
+                <th scope="col">Percentage</th>
+                <th scope="col">Result Status</th>
+                <th scope="col">Views</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+
+            {% for i in result %}
+     
+            {% if i.quiz.show_res  %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{i.quiz.topic|capfirst}}</td>
+                <td>{{i.user.admin.first_name|capfirst}}  {{i.user.admin.last_name}}</td>
+                 <td>{{i.total_mark}}</td>
+                <td> {% float_into_dec i.score %} % </td>
+                <td>{% if i.result_status %}
+                <span class='text-success'><b>Pass*</b></span>
+                {% else %}
+                <span class='text-danger'><b>Fell*</b></span>
+                {% endif %}</td>
+                <td><a href="{% url 'student_quiz_view_page' i.quiz.id %}" class='btn btn-success'>View</a></td>
+            </tr>
+            {% endif %}
+        
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+
+    {% for i in answer %}
+    {{i}}
+    {% endfor %}
+</section>
+
+
+
+{% endblock body %}

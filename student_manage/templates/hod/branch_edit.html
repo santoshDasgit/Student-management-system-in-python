@@ -1,0 +1,24 @@
+{% extends 'header.html' %}
+
+{% block body %}
+<section class='index my-2'>
+    <div class="row admin">
+        <div class="col-12">
+            <h1>Branch</h1>
+
+            <span>Branch</span><span class='mx-2'>/</span><span class='text-secondary'>edit branch</span>
+            
+                    </div>
+                </div>
+            </section>
+
+            {% include "msg.html" %}
+
+    <form method='post' class='p-3 shadow p-3 mb-5 bg-body rounded' >
+        {% csrf_token %}
+         <input type="text" name="name" value = "{{data.name}}" class='form-control my-2' id="">    
+         {{fm}}    
+         <input type="submit" class='btn btn-primary my-2' value='change'>
+         <a href="{% url 'branch_add' %}" class='btn btn-warning'>Back</a>
+    </form>
+{% endblock body %}

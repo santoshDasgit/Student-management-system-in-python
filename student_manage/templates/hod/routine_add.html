@@ -1,0 +1,143 @@
+{% extends "header.html" %}
+
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Routine</h1>
+
+            <span>
+                <span>Routine / <span class="text-secondary">Routine add</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'routine_show' %}" class="btn btn-primary"> Routine list <i class="fa-solid fa-table ml-2"></i></a>
+
+        </div>
+    </div>
+</section>
+{% include 'msg.html' %}
+<section class='routine mt-4'>
+<form action="" method="post" class=' border shadow-sm p-3 mb-5 bg-white rounded p-2'>
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <label for="">course</label>
+            <select name="course" id="" class='form-control'>
+                {% for i in course %}
+                <option value="{{i.id}}">{{i.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-6">
+            <label for="">Branch</label>
+            <select name="branch" id="" class='form-control'>
+                {% for i in branch %}
+                <option value="{{i.pk}}">{{i.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="">Semistar</label>
+            <select name="sem" id="" class='form-control'>
+                {% for i in sem %}
+                <option value="{{i.pk}}">{{i.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-6">
+            <label for="">Start time</label>
+            <input type="time" name="start" id="" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="">End time</label>
+            <input type="time" name="end" id="" required>
+        </div>
+    </div>
+    <div class="row">
+       <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-8"> <h5 class='my-3'><b>Subject add</b></h5></div>
+                <div class="col-md-4"> <h5 class='my-3'><input type="hidden" name='action' id="hiden_inp" value="false"><button type="button" class='btn btn-info recess_btn' onclick="fn()">add Recess</button></div>
+            </div>
+       </div>
+          
+        <div class="col-md-12">
+            <label for="">Monday</label>
+            <select name="monday" id="" class="form-control">
+                {% for i in subject %}
+                <option value="{{i.pk}}">{{i.name}}  ({{i.course.name}} , {{i.branch.name}} ,{{i.sem}} sem , {{i.teacher.admin.first_name}}_{{i.teacher.admin.last_name}})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label for="">Tuesday</label>
+            <select name="tuesday" id="" class="form-control">
+               {% for i in subject %}
+                <option value="{{i.pk}}">{{i.name}}    ({{i.course.name}} , {{i.branch.name}} ,{{i.sem}} sem , {{i.teacher.admin.first_name}}_{{i.teacher.admin.last_name}})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label for="">Wednesday</label>
+            <select name="wednesday" id="" class="form-control">
+               {% for i in subject %}
+                <option value="{{i.pk}}">{{i.name}}    ({{i.course.name}} , {{i.branch.name}} ,{{i.sem}} sem , {{i.teacher.admin.first_name}}_{{i.teacher.admin.last_name}})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label for="">Thursday</label>
+            <select name="thursday" id="" class="form-control">
+               {% for i in subject %}
+                <option value="{{i.pk}}">{{i.name}}    ({{i.course.name}} , {{i.branch.name}} ,{{i.sem}} sem , {{i.teacher.admin.first_name}}_{{i.teacher.admin.last_name}})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label for="">Friday</label>
+            <select name="friday" id="" class="form-control">
+               {% for i in subject %}
+                <option value="{{i.pk}}">{{i.name}}    ({{i.course.name}} , {{i.branch.name}} ,{{i.sem}} sem , {{i.teacher.admin.first_name}}_{{i.teacher.admin.last_name}})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label for="">Saturday</label>
+            <select name="saturday" id="" class="form-control">
+               {% for i in subject %}
+                <option value="{{i.pk}}">{{i.name}}    ({{i.course.name}} , {{i.branch.name}} ,{{i.sem}} sem , {{i.teacher.admin.first_name}}_{{i.teacher.admin.last_name}})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+    </div>
+    <button type="submit" class='btn btn-primary my-2'>Save it</button>
+</form>
+</section>
+
+<script>
+    let inp = document.querySelector('#hiden_inp')
+    let btn = document.querySelector('.recess_btn')
+    function fn(){
+        if(inp.value == 'false'){
+            inp.value = 'true'
+            btn.innerHTML = 'remove Recess'
+        }else{
+            inp.value = 'false'
+            btn.innerHTML = 'add Recess'
+        }
+
+    }
+</script>
+
+{% endblock body %}

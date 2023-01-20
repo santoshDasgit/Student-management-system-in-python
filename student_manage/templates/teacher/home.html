@@ -1,0 +1,160 @@
+{% extends 'header.html' %}
+
+{% load static %}
+{% block body %}
+
+<section class='index my-5'>
+    <div class="row admin">
+        <div class="col-12">
+            <h1>Wellcome {{request.user.first_name|capfirst}} {% if gen.gender == "male" %}sir ! {% else %} mam !{% endif %} </h1>
+
+            <span>Dashbord</span><span class='mx-2'>/</span><span class='text-secondary'> Teacher Dashbord </span>
+
+        </div>
+    </div>
+</section>
+{% include "msg.html" %}
+
+<section class='teacher_home'>
+    
+    {% if condition  %}
+    <div class="p-3 mb-2 notification_div shadow p-3 mb-5 bg-white rounded">
+     <p class=' text-center'><i class="fa-regular fa-bell text-dark"></i>  You have some notification from <b>PRINIPLE  </b><i class="fa-regular fa-bell text-dark"></i></p>
+       <a href="{% url 'hod_notify_list' %}" class='btn btn-primary' <i class="fa-regular fa-bell"></i> View</a>
+    </div>
+    
+    {% endif %}
+</section>
+
+
+<section>
+  
+  <section>
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 col-12 d-flex ">
+        <div class="card bg-comman w-100 shadow-lg p-3 mb-5 bg-white rounded">
+          <div class="card-body">
+            <div class="db-widgets d-flex justify-content-between align-items-center">
+              <div class="db-info">
+                <h6>Total Strength</h6>
+                <h3>{{student_count}}</h3>
+              </div>
+              <div class="db-icon">
+                <img src="{% static 'images/icon/student.png' %}" alt="Dashboard Icon">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 col-12 d-flex ">
+        <div class="card bg-comman w-100 shadow-lg p-3 mb-5 bg-white rounded">
+          <div class="card-body">
+            <div class="db-widgets d-flex justify-content-between align-items-center">
+              <div class="db-info">
+                <h6>Total Teachers of Department</h6>
+                <h3>{{teacher_count}}</h3>
+              </div>
+              <div class="db-icon">
+                <img src="{% static 'images/icon/teacher.png' %}" alt="Dashboard Icon">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 col-12 d-flex ">
+        <div class="card bg-comman w-100 shadow-lg p-3 mb-5 bg-white rounded">
+          <div class="card-body">
+            <div class="db-widgets d-flex justify-content-between align-items-center">
+              <div class="db-info">
+                <h6>Total quiz you make</h6>
+                <h3>  {% if quiz_count %}
+                    {{quiz_count}}
+                    {% else %}
+                    0
+                {% endif %}</h3>
+              </div>
+              <div class="db-icon">
+                <img src="{% static 'images/icon/choose.png' %}" style="width: 64px ;height: 64px;" alt="Dashboard Icon">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 col-12 d-flex ">
+        <div class="card bg-comman w-100 shadow-lg p-3 mb-5 bg-white rounded">
+          <div class="card-body">
+            <div class="db-widgets d-flex justify-content-between align-items-center">
+              <div class="db-info">
+                <h6>Total assignment You make</h6>
+                <h3>{{assignment_count}}</h3>
+              </div>
+              <div class="db-icon">
+                <img src="{% static 'images/icon/assignment.png' %}" style="width: 64px ;height: 64px;" alt="Dashboard Icon">
+         
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+
+
+<section class='shadow p-3 mb-5 bg-white rounded'>
+    <h4>Notice to student</h4>
+    <form action="" method="post" enctype="multipart/form-data">
+     <div class="row">
+    {% csrf_token %}   
+    {% for i in fm %}
+    
+    <div class="col-md-6">
+        <label for="">{{i.label}}</label>
+        {{i}}
+    </div>
+    {% endfor %}
+</div>
+<button type="submit" class="btn btn-primary mt-2">Sent</button>
+ </form>
+
+</section>
+
+<section style='width:100%;overflow-x: scroll;'>
+    
+ <table class="table mt-4" >
+    <h5>Notice list</h5>
+     <thead>
+      <tr>
+        <th scope="col">no</th>
+        <th scope="col">Title</th>
+        <th scope="col">course</th>
+        <th scope="col">Branch</th>
+        <th scope="col">Semester</th>
+        <th scope="col">Date</th>
+        <th scope="col">File</th>
+        <th scope="col">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in notice_list %}
+        
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{i.title}}</td>
+          <td>{{i.course.name}}</td>
+          <td>{{i.branch.name}}</td>
+          <td>{{i.sem}}</td>
+          <td>{{i.date}}</td>
+          <td><a href="{{i.file.url}}" download> download</a></td>
+          <td><a href="{% url 'teacher_notice_to_student_remove' i.id %}" class='text-danger'> <i class="fas fa-trash"></i></a></td>
+        </tr>
+        {% empty %}
+        <span class="text-danger">Empty Notice</span>
+        {% endfor %}
+     
+    </tbody>
+  </table>
+</section>
+{% endblock body %}

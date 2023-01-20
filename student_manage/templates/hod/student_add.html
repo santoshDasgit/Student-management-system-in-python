@@ -1,0 +1,212 @@
+{% extends 'header.html' %}
+
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Student</h1>
+
+           <span>
+            <span>Student / <span class="text-secondary">Student add</span></span>
+           </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'student_list' %}" class="btn btn-primary"> Student list <i class="fas fa-user-graduate ml-2"></i></a>
+        </div>
+    </div>
+</section>
+
+
+<div class="student_add">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" action="{% url 'add_student' %}" enctype="multipart/form-data">
+                        
+                        {% csrf_token %}
+                        <div class="row">
+                            <!-- messages  -->
+                         {% include "msg.html" %}
+                           
+                           
+                        
+                            
+                            <div class="col-12">
+                                <h5 class="form-title"><span>Student Information</span></h5>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group" >
+                                    <label>First Name</label>
+                                    <input type="text" name="fname" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" name="lname" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Student Id</label>
+                                    <input type="text" name="id" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <select class="form-control select select2-hidden-accessible" data-select2-id="1" name="gender"
+                                        tabindex="-1" aria-hidden="true">
+                                  
+                                        <option value='femail'>Female</option>
+                                        <option value='male'>Male</option>
+                                        <option value='other'>Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" name="password" class="form-control" required>
+                                </div>
+                            </div>
+                           
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Course</label>
+                                    <select class="form-control select select2-hidden-accessible" name="course" data-select2-id="1" required aria-required="true" 
+                                    tabindex="-1" aria-hidden="true">
+                                
+                                   {% for i in course %} 
+                                   <option value="{{i.id}}">{{i.name}}</option>
+                                   {% endfor %}
+                            
+                                </select>
+                                </div>
+                            </div>
+                           
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Semester</label>
+                                    <div>
+                                        <select class="form-control select select2-hidden-accessible" data-select2-id="1" name="sem" required aria-required="true"
+                                        tabindex="-1" aria-hidden="true">
+                                      
+                                        {% for i in sem %}
+                                        <option value = "{{i.id}}">{{i.name}}</option>
+                                        {% endfor %}
+                                        
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Branch</label>
+                                    <select class="form-control select select2-hidden-accessible" name="branch" data-select2-id="1" required aria-required="true"
+                                    tabindex="-1" aria-hidden="true">
+                                   
+                                    {% for i in branch %}
+                                    <option value="{{i.id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                    
+                                </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Section Year</label>
+                                    <select class="form-control select select2-hidden-accessible" name="year" data-select2-id="1" required aria-required="true"
+                                    tabindex="-1" aria-hidden="true">
+                                 
+                                   
+                                    {% for i in year %}
+                                    <option value = "{{i.id}}">{{i.session_start}}  to  {{i.session_end}}</option>
+                                    {% endfor %}
+            
+                                </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Date of Birth</label>
+                                    <div>
+                                        <input type="date" name="dob" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>email</label>
+                                    <div>
+                                        <input type="email" name="email" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Mobile Number</label>
+                                    <input type="text" name="mob" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Student Image</label>
+                                    <input type="file" name="img" class="form-control" accept="image/*">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h5 class="form-title"><span>Parent Information</span></h5>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Father's Name</label>
+                                    <input type="text" name="father" class="form-control">
+                                </div>
+                            </div>
+                           
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Father's Mobile</label>
+                                    <input type="number" name="father_ph" class="form-control">
+                                </div>
+                            </div>
+                           
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Mother's Name</label>
+                                    <input type="text" name="mother" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Mother's Mobile</label>
+                                    <input type="number" name="mother_ph" class="form-control">
+                                </div>
+                            </div>
+                            
+                            </div>
+                            
+                            <div class="col-12 ">
+                                <div class="form-group">
+                                    <label> Address</label>
+                                    <textarea class="form-control" name="address"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock body %}

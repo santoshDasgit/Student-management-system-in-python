@@ -1,0 +1,102 @@
+{% extends "header.html" %}
+{% load simpletag %}
+{% load static %}
+{% block body %}
+<section class='student_views container p-md-3 pt-3 '>
+
+    <div class="ch_student_view ">
+        <h4> 
+            Details about <span class='text-primary'>{{data.admin.first_name |capfirst}} {% if data.gender == 'male' %}
+            Sir !
+            {% else %}
+            Mam !
+            {% endif %}</span></h4>
+        <div class="row head_details ">
+            <div class="col-md-4 ldiv">
+                <img src="{% if data.admin.profile_image  %}
+                {{data.admin.profile_image.url}}
+                {% else %}
+                  {% static "default_dp.jpg" %} {% endif %} " class='w-100 profile' alt="" >
+            </div>
+            <div class=" col-md-8 rdiv">
+                <div class="row">
+                    <div class="col-4">Name : </div>
+                    <div class="col-8"> {{data.admin.first_name | capfirst}} {{data.admin.last_name}}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">Member of Branch : </div>
+                    <div class="col-8"> {{data.branch.name}}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">Reg no : </div>
+                    <div class="col-8"> {{data.teacher_id}}</div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-4">Member of Course : </div>
+                    <div class="col-8"> {{data.course.name}} </span></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">Phone : </div>
+                    <div class="col-8"> {{data.ph}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-4">age : </div>
+                    <div class="col-8"> {% if data.dob %}{% age data.dob %} {% else %} age NULL {% endif %}</div>
+                </div>
+                <div class="row">
+                    <div class="col-4">Dob : </div>
+                    <div class="col-8">{{data.dob}}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">Email : </div>
+                    <div class="col-8"> {{data.admin.email}}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">Gender : </div>
+                    <div class="col-8"> {{data.gender}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-4"> Joining date : </div>
+                    <div class="col-8"> {{data.join}}</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <h3 class="my-4">Extra Information</h3>
+   
+
+    <div class="row extra_info">
+        <div class="col-4">Qualification</div>
+        <div class="col-6">{{data.qualification |capfirst}}</div>
+    </div>
+
+    <div class="row extra_info">
+        <div class="col-4">Experience</div>
+        <div class="col-6">{{data.experience}} year of experience</div>
+    </div>
+    <div class="row extra_info">
+        <div class="col-4">address</div>
+        <div class="col-6">{{data.address | capfirst}}</div>
+    </div>
+ 
+
+
+
+</section>
+
+
+
+
+</div>
+{% endblock body %}

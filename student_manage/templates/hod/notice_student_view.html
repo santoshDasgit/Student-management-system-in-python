@@ -1,0 +1,39 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block body %}
+
+{% include 'msg.html' %}
+<form action="" method="post" class='shadow p-3 mb-5 bg-body rounded '>
+    {% csrf_token %}
+    {{ fm.media }}
+   
+    {{fm.as_p}}
+    
+    <button type="submit" class='btn btn-primary my-3'>Changed it</button>
+    <a href="{% url 'notice_student_list' %}" class='btn btn-danger'>Back</a>
+
+</form>
+
+<h5 class="text-dark my-3 mb-4">Student message status :</h5>
+{% for i in see_msg %}
+
+
+    <h2 class="table-avatar">
+        <a href="{% url 'student_details' i.student.admin.id %}" class="avatar avatar-sm me-2">
+
+            <img class="avatar-img rounded-circle mr-1" height="40px" width="40px" src="
+            
+              {% if i.student.admin.profile_image %}
+              {{i.student.admin.profile_image.url}}
+              {% else %}
+              {% static 'default_dp.jpg' %}
+              {% endif %}
+            
+            " alt="lode">  {{i.student.admin.first_name|capfirst}} {{i.student.admin.last_name}} </a>
+    </h2>
+   {% empty %}
+   <span class='text-danger'>No one can seen</span>
+{% endfor %}
+{% endblock body %}
+
+

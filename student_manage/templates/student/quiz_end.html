@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        .quiz-end-page .para {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-end-page .para h1 {
+            font-family: cursive;
+            font-weight: 100;
+            color: orangered;
+        }
+
+        .quiz-end-page .back-btn a {
+            background-color: orangered;
+            text-decoration: none;
+            color: white;
+            padding: 10px 34px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class='quiz-end-page'>
+        
+        <div class='para'>
+            <h1>Racord already submitted <br> Result coming soon</h1>
+        </div>
+        <div class="back-btn">
+            <a href="{% url 'student_quiz' %}">Back</a>
+        </div>
+
+    </section>
+</body>
+
+</html>

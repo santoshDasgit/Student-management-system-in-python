@@ -1,0 +1,49 @@
+{% extends "header.html" %}
+
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        
+        <div class="col-6 col-md-8">
+            <h1>Quize</h1>
+
+            <span>
+                <span>Question / <span class="text-secondary">Question Changed</span></span>
+            </span>
+
+        </div>
+       
+    </div>
+</section>
+<section class='row quiz_qn_fm'>
+
+    <div class="col-md-12 shadow p-3 mb-5 bg-white rounded">
+        <form action="" method="post">
+            {% include "msg.html" %}
+            {% csrf_token %}
+            <b><label for="">Question:</label></b>
+            {% for i in qn_fm %}
+            {{i}}
+            {% endfor %}
+            
+        
+
+            <div class="ans_fm mt-4">
+                <b><label for="">Answers:</label></b>
+                {% for i in data.quiz_ans_set.all %}
+                <div class="row my-2">
+                    <div class="col-10"><input type="text"   name='ans' class='form-control w-100 ans_inp {% if i.correct %}
+                        bg-success text-white
+                    {% endif %}' value="{{i.text}}"></div>
+                    <div class="col-2"><input type="checkbox"  name="check_inp{{forloop.counter}}"  class='form-control'></div>
+                </div>
+                {% endfor %}          
+                </div>
+                <a href="{% url 'quiz_qn_add' data.quiz.id %} " class='btn btn-danger my-4 mr-2'> Back</a>
+                <button type="submit" class='btn btn-primary '>Changed</button>
+            </div>
+
+        </form>
+    </div>
+</section>
+{% endblock body %}

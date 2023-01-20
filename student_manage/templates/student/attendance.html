@@ -1,0 +1,86 @@
+{% extends 'header.html' %}
+{% load simpletag %}
+{% block body %}
+
+<section class='index my-2'>
+    
+  <div class="row admin">
+      <div class="col-12">
+          <h1>Attendance</h1>
+
+          <span>Attendance</span><span class='mx-2'>/</span><span class='text-secondary'>Attendance List</span>
+          
+                  </div>
+              </div>
+          </section>
+
+<table class="table table-hover  ">
+    <thead>
+        <tr>
+
+
+            <th scope="col">No</th>
+
+            <th scope="col">Name</th>
+        
+   
+            <th scope="col">View</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for i in sub %}
+
+        <tr>
+
+            <td class='text-dark'>{{forloop.counter}}</td>
+
+            <td><b>{{i.name|capfirst}}</b></td>
+       
+   
+
+           
+            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg{{forloop.counter}}">View</button></td>
+
+            <div class="modal fade bd-example-modal-lg{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+               
+                  <div class="modal-content">
+                    <div class="modal-header">
+                        {% attendance_show i.id as attendance %}
+                        <h5 class="modal-title" id="exampleModalLabel">Total <b>{{attendance.count}} classes</b> complite</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+
+                      <div class="modal-body">
+                         
+                        {% attendance_children request.user i.id as student_att_list %}
+                        <span class='text-primary'><b>{{student_att_list.count}}</b> classes attend</span> <br>
+                         {% for i in student_att_list %}
+                         {{i.date}} <br>
+                         {% endfor %}
+                        
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                      </div>
+                  </div>
+
+                </div>
+              </div>
+        </tr>
+        {% empty %}
+        <marquee behavior="" direction=""> <span class='text-danger'>No results found </span></marquee>
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+
+{% endblock body %}
+

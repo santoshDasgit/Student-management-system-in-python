@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+{% load active_link_tags %}
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'header/fonts/icomoon/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'header/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'header/css/bootstrap.min.css' %}">
+    <!-- jquery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {% comment %} cd Editor  {% endcomment %}
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'header/css/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+
+    <title>Nit Cse Admin</title>
+</head>
+
+<body>
+
+
+    <aside class="sidebar">
+        <div class="toggle">
+            <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+                <span></span>
+            </a>
+        </div>
+        <div class="side-inner">
+            {% comment %} sidebar Profile {% endcomment %}
+            <div class="profile">
+                <img src="{% if request.user.profile_image %}
+                {{request.user.profile_image.url}}
+                {% else %}
+                {% static 'default_dp.jpg' %}
+                {% endif %}" alt="Image" class="img-fluid">
+                <h3 class="name">
+                    {% if request.user.first_name is None %}
+                    {{request.user.username}}
+                    {% else %}
+                    {{request.user.username}}
+                    {% endif %}
+                </h3>
+
+
+                {% comment %} sidebar address {% endcomment %}
+
+                <span class="country"> {{request.user.first_name}} {{request.user.last_name}} </span>
+            </div>
+
+    {% comment %}----------------------- SIDE_BAR ------------------------------ {% endcomment %}
+
+            <div class="nav-menu">
+                  {% if request.user.user_type == '1' %}
+                  <ul>
+                    <li class=" {% if request.path == '/hod/dashboard/' %}active{% endif %} "><a href="{% if request.user.user_type == '1' %} {% url 'hod_dashboard' %}
+                    {% elif request.user.user_type == '2'  %} #
+                    {% elif request.user.user_type == '3'  %} #
+                    {% endif %}"><i class="fa-solid fa-table-columns mr-3"></i> Dashbord</a></li>
+
+                    <li class=" {% if request.path == '/hod/student_list/' or request.path == '/hod/add_student/' %}active{% endif %} "><a href="{% url 'student_list' %}"><i class="fas fa-user-graduate mr-3"></i>Students</a></li>
+                    <li class=" {% if request.path == '/hod/teacher_list/' or request.path == '/hod/teacher_add' %}active{% endif %} "><a href="{% url 'teacher_list' %}"><i class="fa-solid fa-chalkboard-user mr-3"></i>Teachers</a></li>
+                    <li class=" {% if request.path == '/hod/add_course/' %}active{% endif %} "><a href="{% url 'course_add' %}"> <i class="fas fa-building mr-3"></i> Course</a></li>
+                    <li class=" {% if request.path == '/hod/branch_add/' %}active{% endif %} "><a href="{% url 'branch_add' %}"><i class="fa-sharp fa-solid fa-scroll mr-3"></i>Branch</a></li>
+                    <li class=" {% if request.path == '/hod/subject_add/' or request.path == '/hod/subject_list/' %}active{% endif %} "><a href="{% url 'subject_list' %}"><i class="fa-solid fa-book mr-3"></i>Subject</a></li>
+                    <li class=" {% active_link 'session_list' 'active' %}"><a href="{% url 'session_list' %}"><i class="fa-sharp fa-solid fa-school mr-3"></i>Session</a></li>
+                    
+                    <li class="{% active_link 'routine_add' 'active' %} {% active_link 'routine_show' 'active' %}"><a href="{% url 'routine_show' %}" ><i class="fa-solid fa-table mr-3"></i>Routine</a></li>
+                    <li><a href="#"><i class="fa-sharp fa-solid fa-users mr-3"></i>Attendance</a></li>
+                    <li class="{% active_link 'notice_teacher' 'active' %} {% active_link 'notice_teacher_list' 'active' %}"><a href="{% url 'notice_teacher_list' %}"><i class="fa-solid fa-comment mr-3"></i>Notice to Teachers</a></li>
+
+                    <li class="{% active_link 'notice_student' 'active' %} {% active_link 'notice_student_list' 'active' %}"><a href="{% url 'notice_student_list' %}"><i class="fa-solid fa-comment mr-3"></i>Notice to Students</a></li>
+                    <li class="{% active_link 'leave_teacher' 'active' %}"><a href="{% url 'leave_teacher' %}"><i class="fa-sharp fa-solid fa-file mr-3"></i>Teachers leave </a></li>
+                    <li class="{% active_link 'leave_student' 'active' %}"><a href="{% url 'leave_student' %}"><i class="fa-sharp fa-solid fa-file mr-3"></i>Student leave</a></li>
+                    <li class="{% active_link 'feedback_teacher' 'active' %}"><a href="{% url 'feedback_teacher' %}"><i class="fa-solid fa-envelope mr-3"></i>Teacher Feedback</a></li>
+                    <li class="{% active_link 'feedback_student' 'active' %}"><a href="{% url 'feedback_student' %}"><i class="fa-solid fa-envelope mr-3"></i>Student Feedback</a></li>
+                    <li class="{% active_link 'hostel_list' 'active' %} {% active_link 'hostel_add' 'active' %} "><a href="{% url 'hostel_list' %}"><i class="fas fa-hotel mr-3"></i>Hostel room</a></li>
+                    <li class="{% active_link 'transport_add' 'active' %} {% active_link 'transport_list' 'active' %} "><a href="{% url 'transport_list' %}"><i class="fas fa-bus mr-3"></i>Transport</a></li>
+                    <li class="{% active_link 'hod_quiz_list' 'active' %}"><a href="{% url 'hod_quiz_list' %}"><i class="fa-solid fa-q mr-3"></i>Quiz</a></li>
+                    <li class="{% active_link 'hod_assignment_list' 'active' %}"><a href="{% url 'hod_assignment_list' %}"><i class="fa-solid fa-list-check mr-3"></i>Assignment</a></li>
+                    <li class="{% active_link 'hod_setting' 'active' %}"><a href="{% url 'hod_setting' %}"><i class="fa-solid fa-gears mr-3"></i>Seeting</a></li>
+                    
+                    
+                    
+                {% comment %} -----------------------------Teacher---------------------------- {% endcomment %}
+                </ul>
+                  {% elif request.user.user_type == '2' %}
+                  <ul>
+                    <li class="{% active_link 'teacher_home' 'active' %}"><a href="{% url 'teacher_home' %}"><i class="fa-solid fa-table-columns mr-3"></i>Dashbord</a></li>
+                    <li class="{% active_link 'hod_notify_list' 'active' %}"><a href="{% url 'hod_notify_list' %}"><i class="fa-solid fa-bell mr-3"></i>Principle Notification</a></li>
+                    <li class="{% active_link 'teacher_leave_list' 'active' %} {% active_link ' teacher_leave_apply' 'active' %} "><a href="{% url 'teacher_leave_list' %}"><i class="fa-sharp fa-solid fa-file mr-3"></i>Apply leave </a></li>
+                    <li class="{% active_link 'teacher_feedback_list' 'active' %} {% active_link 'teacher_feedback' 'active' %}"><a href="{% url 'teacher_feedback' %}"><i class="fa-solid fa-envelope mr-3"></i>Feedback</a></li>
+                    <li class=" {% active_link 'course_all' 'active' %} "><a href="{% url 'course_all' %}"> <i class="fas fa-building mr-3"></i> Course List</a></li>
+                    <li class=" {% active_link 'branch_all' 'active' %} "><a href="{% url 'branch_all' %}"><i class="fa-sharp fa-solid fa-scroll mr-3"></i>Branch List</a></li>
+                    <li class="{% active_link 'take_attendance' 'active' %} "><a href="{% url 'take_attendance' %}"><i class="fa-sharp fa-solid fa-users mr-3"></i>Attendance</a></li>
+                    <li class="{% active_link 'online_class' 'active' %} {% active_link 'online_class_list' %} "><a href="{% url 'online_class_list' %}"><i class="fa-solid fa-chalkboard-user mr-3"></i>Online class</a></li>
+                    <li class="{% active_link 'blog' 'active' %} {% active_link 'blog_view' 'active' %} {% active_link 'blog_add' 'active' %}"><a href="{% url 'blog' %}"><i class="fa fa-newspaper mr-3"></i>Blog</a></li>
+                    <li class="{% active_link 'hostel_room' 'active' %} "><a href="{% url 'hostel_room' %}"><i class="fas fa-hotel mr-3"></i>Hostel</a></li>
+                    <li class="{% active_link 'transport' 'active' %} "><a href="{% url 'transport' %}"><i class="fas fa-bus mr-3 "></i>Transport</a></li>
+                    <li class="{% active_link 'quiz_add' 'active' %} {% active_link 'quiz_list' 'active' %}"><a href="{% url 'quiz_list' %}"><i class="fa-solid fa-q mr-3"></i>Quiz</a></li>
+                    <li class="{% active_link 'teacher_assignment_create' 'active' %} {% active_link 'teacher_assignment_list' 'active' %}"><a href="{% url 'teacher_assignment_list' %}"><i class="fa-solid fa-list-check mr-3"></i>Assignment</a></li>
+                    <li class="{% active_link 'teacher_star_student' 'active' %}"><a href="{% url 'teacher_star_student' %}"><i class="fa-solid fa-star mr-3"></i>Star student</a></li>
+                 
+
+                  </ul>
+
+                {% comment %} -----------------------------STUDENT---------------------------- {% endcomment %}
+                  {% else %}
+                  <ul>
+                    <li class="{% active_link 'student_home' 'active' %}"><a href="{% url 'student_home' %}"><i class="fa-solid fa-table-columns mr-3"></i>Dashbord</a></li>
+                    <li class="{% active_link 'student_notify' 'active' %} {% active_link 'student_notify_show' 'active' %}"><a href="{% url 'student_notify' %}"><i class="fa-solid fa-bell mr-3"></i>Principle Notification</a></li>
+                    <li class = "{% active_link 'student_leave_apply' 'active' %} {% active_link 'student_leave_list' 'active' %}"><a href="{% url 'student_leave_list' %}"><i class="fa-sharp fa-solid fa-file mr-3"></i>Apply leave </a></li>
+                    <li class="{% active_link 'student_feedback_list' 'active' %} {% active_link 'student_feedback' 'active' %}"><a href="{% url 'student_feedback' %}"><i class="fa-solid fa-envelope mr-3"></i>Feedback</a></li>
+                    <li class="{% active_link 'student_see_routine' 'active' %}"><a href="{% url 'student_see_routine' %}" ><i class="fa-sharp fa-solid fa-users mr-3"></i>Routine</a></li>
+                    <li class=" {% active_link 'course_all' 'active' %} "><a href="{% url 'course_all' %}"> <i class="fas fa-building mr-3"></i> Course List</a></li>
+                    <li class=" {% active_link 'branch_all' 'active' %} "><a href="{% url 'branch_all' %}"><i class="fa-sharp fa-solid fa-scroll mr-3"></i>Branch List</a></li>
+                    <li class="{% active_link 'student_see_attendance' 'active' %}"><a href="{% url 'student_see_attendance' %}" ><i class="fa-sharp fa-solid fa-hand mr-3"></i>Attendance</a></li>
+                    <li class="{% active_link 'student_online_class' 'active' %}"><a href="{% url 'student_online_class' %}"><i class="fa-solid fa-chalkboard-user mr-3"></i>Online class</a></li>
+                    <li class="{% active_link 'blog' 'active' %} {% active_link 'blog_view' 'active' %} {% active_link 'blog_add' 'active' %}"><a href="{% url 'blog' %}"><i class="fa fa-newspaper mr-3"></i>Blog</a></li>
+                    <li class="{% active_link 'hostel_room' 'active' %} "><a href="{% url 'hostel_room' %}"><i class="fas fa-hotel mr-3"></i>Hostel</a></li>
+                    <li class="{% active_link 'transport' 'active' %} "><a href="{% url 'transport' %}"><i class="fas fa-bus mr-3 mr-3"></i>Transport</a></li>
+                    <li class="{% active_link 'student_group_discuss' 'active' %} "><a href="{% url 'student_group_discuss' %}"><i class="fa-solid fa-user-group mr-3"></i>Group discussion</a></li>
+                    <li class="{% active_link 'student_quiz' 'active' %}"><a href="{% url 'student_quiz' %}"><i class="fa-solid fa-q mr-3"></i>Quiz</a></li>
+                    <li class="{% active_link 'student_assignment_list' 'active' %}"><a href="{% url 'student_assignment_list' %}"><i class="fa-solid fa-list-check mr-3"></i>Assignment</a></li>
+                    
+
+                    
+                  </ul>
+                  {% endif %}
+            </div>
+        </div>
+
+    </aside>
+    <main>
+        <div class="site-section">
+            <div class="container">
+                <div class="row ">
+
+
+
+
+
+                    <div class="col-md-12  p_header_nav">
+                        <nav class="header_nav">
+                            <div class="row pl-4">
+                                <div class="col-9 justify-content-center" style="height:52px ;">
+                                    <center class="h-100">
+                                        <img class="h-100"
+                                            src="https://www.eduvidya.com/admin/Upload/Institutes/636518579953069868_Nalanda%20Institute%20of%20Technology,%20Bhubaneswar.jpg"
+                                            alt="Image loded" srcset="">
+
+                                    </center>
+                                </div>
+                                <div class="col-3 ">
+                                    <div class="row">
+                                        <div class="col-12 profile_pic">
+                                            <img class="" onclick="profile_click()"
+                                            src="{% if request.user.profile_image %}
+                                            {{request.user.profile_image.url}}
+                                            {% else %}
+                                            {% static 'default_dp.jpg' %}
+                                            {% endif %}"
+                                                alt="image loded">
+                                            {{request.user.first_name|capfirst}}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+
+                </div>
+                <section class="mt-5">
+                    <div class="my_profile col-md-4  " style="display: block;">
+                        <div class="col-12 border border-1">
+                            <div class="row">
+                                <div class="col-2">
+                                    {% comment %} ___________________________ {% endcomment %}
+
+                                    <img class="profile_img"
+                                        src="{% if request.user.profile_image %}
+                                        {{request.user.profile_image.url}}
+                                        {% else %}
+                                        {% static 'default_dp.jpg' %}
+                                        {% endif %}"
+                                        alt="Image loded">
+                                </div>
+                                <div class="col-8 profile_name">
+                                
+                                    {{request.user.first_name|capfirst}} {{request.user.last_name|capfirst}} ({% if request.user.user_type == '1' %}HOD {% elif request.user.user_type == '2' %}TEAHER {% elif request.user.user_type == '3' %}STUDENT{% endif %})
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'profile_update' %}">
+                            <section class="col-md-12 border border-1 ">
+                                my profile
+                            </section>
+                        </a>
+                        <a href="{% url 'log_out' %}">
+
+                            <section class="col-md-12 border border-1">
+                                logout
+                            </section> 
+                        </a>
+                    </div>
+               
+
+
+                    <!-- ...........................HTML BOOCk...... -->
+
+                    {% block body %}
+
+                    {% endblock body %}
+                    
+                    
+                    {% include "footer.html" %}
+
+
+                </section>
+            </div>
+        </div>
+    </main>  
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <script src="/static/header/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/header/js/popper.min.js"></script>
+    <script src="/static/header/js/bootstrap.min.js"></script>
+    <script src="/static/header/js/main.js"></script>
+    <script src="/static/header/js/back-nd.js"></script>
+    <script src="{% static 'back-nd.js' %}"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+
+
+
+</body>
+
+</html>

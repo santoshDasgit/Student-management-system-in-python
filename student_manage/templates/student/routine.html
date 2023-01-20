@@ -1,0 +1,98 @@
+{% extends 'header.html' %}
+{% load simpletag %}
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Routine</h1>
+
+            <span>
+                <span>Routine / <span class="text-secondary">Routine list</span></span>
+            </span>
+
+        </div>
+      
+    </div>
+</section>
+
+{% for i in course %}
+
+
+
+
+
+<section class="subject_list">
+
+    <div class="subject_list_table">
+
+        <h5 class=" w-25 bg-secondary text-white p-1 text-center">{{i.course.name}}/{{i.branch.name}}/{{i.sem.name}}
+        </h5>
+
+
+        <table class="table table-hover shadow p-3 mb-5 bg-body rounded ">
+            <thead>
+                <tr>
+
+                   
+                    <th scope="col">Time</th>
+
+                    <th scope="col">Monday</th>
+                    <th scope="col">Tuesday</th>
+                    <th scope="col">Wednesday</th>
+                    <th scope="col">Thursday</th>
+                    <th scope="col">Friday</th>
+                    <th scope="col">Saturday</th>
+                  
+                </tr>
+            </thead>
+            <tbody>
+                {% for j in i.routine_set.all %}
+                <tr>
+             
+                    <td class='text-dark'><b>{{j.start|title}} - {{j.end|title}}</b></td>
+                     {% comment %} {% endcomment %}
+                     {% teacher_ide j.monday as mon %}
+                     {% teacher_name j.tuesday as mon_teacher %}
+                    <td> {% subject_name j.monday %} <br> {% if mon_teacher != null  %} <a href="{% url 'teacher_details' mon %}"> {% teacher_name j.monday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %} </td>
+                    
+                    {% teacher_ide j.tuesday as tue %}
+                    {% teacher_name j.tuesday as tue_teacher %}
+                    <td> {% subject_name j.tuesday %} <br> {% if tue_teacher != null  %} <a href="{% url 'teacher_details' tue %}">{% teacher_name j.tuesday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %} </td>
+                    
+                    {% teacher_ide j.wednesday as wed %}
+                    {% teacher_name j.wednesday as wed_teacher %}
+                    <td> {% subject_name j.wednesday %} <br> {% if wed_teacher != null  %} <a href="{% url 'teacher_details' wed %}">{% teacher_name j.wednesday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %}</td>
+                   
+                    {% teacher_ide j.thursday as thurs %}
+                    {% teacher_name j.thursday as thurs_teacher %}
+                    <td> {% subject_name j.thursday %} <br> {% if thurs_teacher != null  %} <a href="{% url 'teacher_details' thurs %}">{% teacher_name j.thursday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %}</td>
+                  
+                    {% teacher_ide j.friday as fri %}
+                    {% teacher_name j.friday as fri_teacher %}
+                    <td> {% subject_name j.friday %} <br> {% if fri_teacher != null  %} <a href="{% url 'teacher_details' fri %}">{% teacher_name j.friday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %}</td>
+                   
+                    {% teacher_ide j.saturday as sat %}
+                    {% teacher_name j.saturday as sat_teacher %}
+                    <td> {% subject_name j.saturday %} <br> {% if sat_teacher != null  %}<a href="{% url 'teacher_details' sat %}">{% teacher_name j.saturday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %}</td>
+                    <td>
+                     
+                         
+                        </td>
+                </tr>
+                {% empty %}
+                <marquee behavior="" direction=""><span class='text-danger'>Routine is <b>empty</b> contact your admin</span></marquee>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+
+
+
+
+    </div>
+
+</section>
+
+{% endfor %}
+{% endblock body %}

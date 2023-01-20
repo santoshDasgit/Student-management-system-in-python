@@ -1,0 +1,34 @@
+{% extends 'header.html' %}
+
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Quize</h1>
+
+            <span>
+                <span>Create / <span class="text-secondary">new quiz</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'quiz_list' %}" class="btn btn-primary"> Quiz list  </a>
+
+        </div>
+    </div>
+</section>
+
+<form action="" class="shadow p-3 mb-5 bg-white rounded" method="post">
+
+      {% csrf_token %}
+       <div class="row">
+        {% for i in fm %}
+        <div class="col-md-6">
+            {{i.label}}
+            {{i}}
+        </div>
+        {% endfor %}
+       </div>
+    <button type="submit" class='btn btn-primary my-2'>Save</button>
+</form>
+{% endblock body %}

@@ -1,0 +1,30 @@
+{% extends "header.html" %}
+
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Student</h1>
+
+            <span>
+                <span>Leave / <span class="text-secondary">Leave apply</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'student_leave_list' %}" class="btn btn-warning">Leave List<i class="fas fa-plus ml-2"></i></a>
+
+        </div>
+    </div>
+</section>
+
+{% include 'msg.html' %}
+<form action="" method="post" class='shadow p-3 mb-5 bg-white rounded'>
+    {% csrf_token %}
+    {{fm.media}}
+    {{fm.as_p}}
+
+    
+    <button type="submit" class='btn btn-primary'>Submit</button>
+</form>
+{% endblock body %}

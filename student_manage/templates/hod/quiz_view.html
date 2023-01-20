@@ -1,0 +1,56 @@
+{% extends "header.html" %}
+{% load simpletag %}
+{% block body %}
+
+
+<section style="width: 100%; overflow-x: scroll;" class='my-5'>
+    <b>Result Details: </b>
+    <table class="table table-striped  table-hover">
+        <thead>
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Topic</th>
+                <th scope="col">Reg no.</th>
+                <th scope="col">Candidate name</th>
+                <th scope="col">Total  mark</th>
+                <th scope="col">Percentage</th>
+                <th scope="col">Result Status</th>
+
+                
+            </tr>
+        </thead>
+        <tbody>
+            
+
+            {% for i in data%}
+     
+           
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{i.quiz.topic|capfirst}}</td>
+                <td>{{i.user.admin.username}}</td>
+                <td>{{i.user.admin.first_name|capfirst}}  {{i.user.admin.last_name}}</td>
+                 <td>{{i.total_mark}}</td>
+                <td> {% float_into_dec i.score %} % </td>
+                <td>{% if i.result_status %}
+                <span class='text-success'><b>Pass*</b></span>
+                {% else %}
+                <span class='text-danger'><b>Fell*</b></span>
+                {% endif %}</td>
+
+            </tr>
+        
+            {% empty %}
+            <span class='text-danger'>No one attend</span>
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+  
+    <a href="{% url 'hod_quiz_list' %}" class='btn btn-warning'>Back</a>
+
+</section>
+
+
+{% endblock body %}

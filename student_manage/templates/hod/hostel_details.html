@@ -1,0 +1,115 @@
+{% extends "header.html" %}
+{% load static %}
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Hostel</h1>
+
+            <span>
+                <span>Room / <span class="text-secondary">Room Update</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'hostel_list' %}" class="btn btn-danger"> Back </a>
+            {% comment %} <i class="fas fa-plus"></i> {% endcomment %}
+        </div>
+    </div>
+</section>
+
+<section class="hostel_edit">
+
+    <form action="" method="post" class="shadow p-3 mb-5 bg-white rounded">
+      {% include "msg.html" %}
+      {% csrf_token %}
+      <div class="row">
+          <div class="col-md-4"> 
+              <label for="">Block</label> 
+              <select id="disabledSelect" class="form-control" name="block" required>
+                  <option value="">Block select</option>
+                  <option value="A" {% if data.block == 'A' %} selected {% endif %}>Block A</option>
+                  <option value="B" {% if data.block == 'B' %} selected {% endif %}>Block B</option>
+                  <option value="C" {% if data.block == 'C' %} selected {% endif %}>Block C</option>
+                  <option value="D" {% if data.block == 'D' %} selected {% endif %}>Block D</option>
+              </select>
+          </div>
+          <div class="col-md-4">
+              <label for="">Room no</label>
+              <input type="number"  class="form-control" name="room"  value={{data.room}}>
+          </div>
+          <div class="col-md-4"><label for="">No of bed</label><input type="number" class="form-control" name="bed" value={{data.no_of_bed}}></div>
+          <div class="col-md-4"><label for="">Cost</label><input type="number" class="form-control"  name="cost" value={{data.cost}}></div>
+          
+      </div>
+      
+      
+ 
+
+
+      
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+        Remove
+      </button>
+      <button type="submit" class="btn btn-primary my-4">Changed</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Block <b>{{data.block}}</b>  room <b>{{data.room}}</b></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+           <span class='text-danger'>Conform to Remove</span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="{% url 'hostel_remove' data.id %}" class="btn btn-danger my-4">Remove</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<br>
+<label for="" class='mt-2'>Existing students in this room</label>
+<br>
+{% if data.available %}
+<label for="" class='mt-1 text-danger'>Bed already Full *</label>
+{% else %}
+<label for="" class='mt-1 text-primary'><b>{{data.available_bed}}</b>  Bed avalible </label>
+{% endif %}
+      {% for i in student  %}
+      <h2 class="table-avatar">
+        <a href="{% url 'student_details' i.student.admin.id  %}" class="avatar avatar-sm me-2">
+
+            <img class="avatar-img rounded-circle mr-1" height="40px" width="40px" src="
+            
+            {% if i.student.admin.profile_image %}
+                {{i.student.admin.profile_image.url}}
+                {% else %}
+                {% static 'default_dp.jpg' %}
+                {% endif %}
+            
+            " alt="lode"> {{i.student.admin.first_name}} {{i.student.admin.last_name}} <a href="{% url 'hostel_student_remove' i.student.admin.id %}" class='ml-1'><i class="fas fa-trash text-danger"></i></a></a>
+    </h2>
+      {% endfor %}
+
+
+      <div class="input-group mb-3">
+   
+     <input type="text" class="form-control" placeholder="Enter student reg no" aria-label="Enter reg no" aria-describedby="basic-addon2" name="student" {% if data.available %}
+            disabled
+        {% endif %}>
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit">Add student <i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+    </form>
+  
+  </section>
+
+{% endblock body %}

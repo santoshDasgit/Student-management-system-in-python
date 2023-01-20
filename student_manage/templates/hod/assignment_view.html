@@ -1,0 +1,69 @@
+{% extends "header.html" %}
+{% load simpletag %}
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Assignment</h1>
+
+            <span>
+                <span>Assignment / <span class="text-secondary">Assignment List</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+             <a href="{% url 'hod_assignment_list' %}" class='btn btn-danger'>Back</a>
+        </div>
+    </div>
+</section>
+
+<section>
+    <button class='btn btn-outline-success'>Total result : {{data.count}}</button>
+    {% include "msg.html" %}
+    
+    <div class="card my-3 shadow-sm p-3 mb-5 bg-white rounded">
+        <h5 class="card-header bg-info text-white">{{head.subject.name|title}}/{{head.topic|capfirst}}</h5>
+        <div class="card-body">
+ 
+            
+            
+            
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Student</th>
+                        <th scope="col">Teacher accept</th>
+                        <th scope="col">Total Mark</th>
+                        <th scope="col">Files</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for i in data %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{i.student.admin.first_name|capfirst}} {{i.student.admin.last_name}} ({{i.student.admin.username}})</td>
+                <td>{% if i.assignment_results %}{{i.assignment_results.teacher_accept}} {% else %} <span class='text-danger'><i class="fa-solid fa-eye-slash"></i></span> {% endif %}</td>
+                <td>{% if i.assignment_results %}{{i.assignment_results.teacher_mark}} {% else %} <span class='text-danger'><i class="fa-solid fa-eye-slash"></i></span> {% endif %}</td>
+                <td>{% if i.file %} <a href="{{i.file.url}}" download  class='btn btn-primary'>download</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %}</td>
+
+            </tr>
+            {% empty %}
+            <span class="text-danger">Empty Result.</span>
+              {% endfor %}
+           
+          
+            </tbody>
+          </table>
+   
+        
+
+  
+          
+        </div>
+    </div>
+
+
+</section>
+
+{% endblock body %}

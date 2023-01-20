@@ -1,0 +1,64 @@
+{% extends "header.html" %}
+
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Transport</h1>
+
+            <span>
+                <span>Transport / <span class="text-secondary">Transport List</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'transport_add' %}" class="btn btn-primary"> Transport <i class="fa fa-plus ml-2"></i> </a>
+            {% comment %} <i class="fas fa-plus"></i> {% endcomment %}
+        </div>
+    </div>
+</section>
+
+<section style="width: 100%; overflow-x: scroll;">
+    <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Route</th>
+            <th scope="col">Bus no</th>
+            <th scope="col">Driver name</th>
+            <th scope="col">Driver phone 1</th>
+            <th scope="col">Driver phone 2</th>
+            <th scope="col">license</th>
+            <th scope="col">Driver address</th>
+            <th scope="col">Action </th>
+          </tr>
+        </thead>
+        <tbody>
+         
+            {% for i in data %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{i.route|title}}</td>
+                <td>{{i.bus_num}}</td>
+                <td>{{i.driver_name|title}}</td>
+                <td>{{i.driver_ph1}}</td>
+                <td>{{i.driver_ph2}}</td>
+                <td>{{i.license}}</td>
+               
+                <td>{{i.driver_address|title}}</td>
+                <td class="text-end" >
+                    <div class="actions" >
+                        <a href="{% url 'transport_edit' i.id %}" class="btn btn-sm btn-primary bg-success-light me-2">
+                           View <i class="fa-solid fa-eye ml-1"></i>
+                        </a>
+                       
+                        
+                    </div>
+                </td>
+              </tr>
+            {% endfor %}
+          
+        </tbody>
+      </table>
+</section>
+{% endblock body %}

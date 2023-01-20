@@ -1,0 +1,30 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Subject</h1>
+
+            <span>
+                <span>Subject / <span class="text-secondary">Subject add</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'subject_list' %}" class="btn btn-primary"> Subject list <i class="fa-solid fa-book ml-2"></i></a>
+
+        </div>
+    </div>
+</section>
+
+<div class="container subject_input">
+    {% include 'msg.html' %}
+    <form action="" class='shadow p-3 mb-5 bg-body rounded' method="post">
+        {% csrf_token %}
+        {{fm}}
+       <button type="submit" class = 'btn btn-primary mt-3'>Save it</button>
+    </form>
+</div>
+
+{% endblock body %}

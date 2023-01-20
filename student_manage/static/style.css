@@ -1,0 +1,65 @@
+
+/* Login page  */
+.login_form form .user,.password {
+        width: 100%;
+        border: none;
+        border-bottom: 0.5px solid orangered;
+        outline: none;
+        height: 50px;
+        font-size: 20px;
+}
+.login_form form button{
+    border: navajowhite;
+    background: orangered;
+    color: white;
+    padding: 9px 32px;
+    border: 1px solid orangered;
+    transition: 0.5s;
+}
+.login_form form button:hover{
+background-color: white;
+color: orangered;
+}
+.login_form .left div{
+    background-image: url('images/login.jpg');
+    background-size: 100% 100%;
+
+}
+
+.login_form .left section{
+    height: 100%;
+    width: 100%;
+    background-color: #ff450059;
+}
+.login_form  .icon h4,h1{
+    text-align: center;
+  
+}
+.login_form  .icon h4{
+    color: orangered;
+    font-weight: 200;
+    font-size: 32px;
+    
+}
+.login_form  .icon h1{
+    color: orangered;
+        
+}
+
+/* -----------------------------dashbord------------------- */
+
+.index .admin h1{
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+
+
+
+
+
+
+
+

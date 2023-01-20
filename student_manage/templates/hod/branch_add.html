@@ -1,0 +1,113 @@
+{% extends "header.html" %}
+
+{% block body %}
+<section class='index my-2'>
+    <div class="row admin">
+        <div class="col-12">
+            <h1>Branch</h1>
+
+            <span>Branch</span><span class='mx-2'>/</span><span class='text-secondary'>branch</span>
+            
+                    </div>
+                </div>
+            </section>
+{% include "msg.html" %}
+
+<div class="col-12 my-3">
+    <form class="row shadow-sm p-3 mb-5 bg-white rounded " method="post" action="{% url 'branch_add' %}">
+        {% csrf_token %}
+        <div class='col-md-12'>
+            <input type="text" name="name" class="form-control w-100 " id="" placeholder='add branch'> 
+        </div>
+       
+       
+       <div class='col-md-12'> {{fms.as_p}}</div>
+       
+      
+        <div class="col-md-12">
+            <button class="btn btn-warning " type="submit"><i class="fa-solid fa-plus mr-1"></i> Save</button>
+        </div>
+    </form>
+</div>
+
+<table class="table table-hover table-center mb-0 datatable dataTable no-footer" id="DataTables_Table_0" role="grid"
+    aria-describedby="DataTables_Table_0_info">
+    <thead>
+        <tr role="row">
+            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                aria-sort="ascending" aria-label="ID: activate to sort column descending" style="width: 167.469px;">ID
+            </th>
+            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                aria-label="Name: activate to sort column ascending" style="width: 236.031px;">Name</th>
+
+            <th class="text-end sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                aria-label="Action: activate to sort column ascending" style="width: 211.094px;">Hod</th>
+
+                <th class="text-end sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                aria-label="Action: activate to sort column ascending" style="width: 211.094px;">Action</th>
+        </tr>
+    </thead>
+
+   {% for i in data %}
+   <tr role="row" class="odd">
+    <td class="sorting_1">{{forloop.counter}}</td>
+    <td>
+        <h2>
+            <a>{{i.name|capfirst}}</a>
+        </h2>
+    </td>
+   <td>
+    {% for j in i.hod_set.all %}
+         
+       {% if j.hod is not null %}
+            <a href="{% url 'teacher_details' j.hod.admin.id %}">{{j.hod.admin.first_name}} {{j.hod.admin.last_name}}</a> 
+    
+       {% else %} 
+       <span class="text-danger">Not mention</span>
+       {% endif %}
+         
+    {% endfor %}
+   </td>
+    <td class="text-end">
+        <div class="actions">
+            <a href="{% url 'branch_edit' i.id %}" class="btn btn-sm btn-primary">
+                <i class="fas fa-pen"></i>
+            </a>
+           
+                
+           
+            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModalCenter{{forloop.counter}}">
+                <i class="fas fa-trash"></i>
+              </button>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModalCenter{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">{{i.name}}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <span class="text-danger">
+                        conform remove
+                      </span>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{% url 'branch_remove' i.id %}" class='btn btn-danger'> Remove </a>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </td>
+</tr>
+   {% endfor %}
+  
+</table>
+
+{% endblock body %}

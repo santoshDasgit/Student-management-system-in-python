@@ -1,0 +1,77 @@
+{% extends "header.html" %}
+
+{% block body %}
+<center>
+    <h3>subject <b>{{quiz_details.topic|capfirst}}</b> total {{quiz_details.num_of_qn}} Qn</h3>
+</center>
+<button class='btn btn-outline-success my-3' id="timer"></button>
+<form action="" method="post" name="myForm" id="myForm">
+    {% csrf_token %}
+    {% for i in data %}
+    <p>{{forloop.counter}}. <b>{{i.text}}</b></p>
+    {% for j in i.quiz_ans_set.all %}
+    <div class="row my-2">
+        <div class="col-10">
+            <ul>
+                <li>{{j.text}}</li>
+            </ul>
+        </div>
+        <div class="col-2"><input type="radio" name="check_inp{{i.id}}" value='{{j.id}}' class='form-control'></div>
+    </div>
+    {% endfor %}
+    {% endfor %}
+   
+    <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Submit
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <span class="text-warning">Conform to Submit, if you one's to submit  your exam will be closed !</span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class='btn btn-primary'>Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<script>
+    var incomeTicker = {{quiz_details.time_duration}}*60;
+
+    window.setInterval(function () {
+        if (incomeTicker > 0)
+            incomeTicker--;
+        document.getElementById("timer").innerHTML = "Remaining time : " + incomeTicker + " seconds";
+    }, 1000);
+
+  
+var auto_refresh = setInterval(function() { submitform(); }, incomeTicker*1000+1);
+// Form submit function.
+function submitform(){
+
+ alert('Your Time is completed form submitted successful..!');
+document.getElementById("myForm").submit();
+
+}
+
+
+</script>
+
+
+
+
+{% endblock body %}

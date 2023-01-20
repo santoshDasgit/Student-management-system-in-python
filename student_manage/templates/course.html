@@ -1,0 +1,45 @@
+{% extends "header.html" %}
+
+{% block body %}
+<section class='index my-2'>
+    
+    <div class="row admin">
+        <div class="col-12">
+            <h1>Courses</h1>
+
+            <span>Dashboard</span><span class='mx-2'>/</span><span class='text-secondary'>courses</span>
+            
+                    </div>
+                </div>
+            </section>
+{% include "msg.html" %}
+
+<table class="table table-hover table-center mb-0 mt-3 datatable dataTable no-footer" id="DataTables_Table_0" role="grid"
+    aria-describedby="DataTables_Table_0_info">
+    <thead>
+        <tr role="row">
+            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                aria-sort="ascending" aria-label="ID: activate to sort column descending" style="width: 167.469px;">No
+            </th>
+            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                aria-label="Name: activate to sort column ascending" style="width: 236.031px;">Name</th>
+
+           
+        </tr>
+    </thead>
+
+   {% for i in data %}
+   <tr role="row" class="odd">
+    <td class="sorting_1">{{forloop.counter}}</td>
+    <td>
+        <h2>
+            <a>{{i.name}}</a>
+        </h2>
+    </td>
+
+</tr>
+   {% endfor %}
+  
+</table>
+
+{% endblock body %}

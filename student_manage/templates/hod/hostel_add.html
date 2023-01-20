@@ -1,0 +1,51 @@
+{% extends "header.html" %}
+
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Hostel</h1>
+
+            <span>
+                <span>Room / <span class="text-secondary">Room add</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'hostel_list' %}" class="btn btn-warning"> Room list </a>
+            {% comment %} <i class="fas fa-plus"></i> {% endcomment %}
+        </div>
+    </div>
+</section>
+
+
+<section class="hostel_add">
+
+  <form action="" method="post" class="shadow p-3 mb-5 bg-white rounded">
+    {% include "msg.html" %}
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4"> 
+            <label for="">Block</label> 
+            <select id="disabledSelect" class="form-control" name="block" required>
+                <option value="">Block select</option>
+                <option value="A">Block A</option>
+                <option value="B">Block B</option>
+                <option value="C">Block C</option>
+                <option value="D">Block D</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="">Room no</label>
+            <input type="number"  class="form-control" name="room"  required>
+        </div>
+        <div class="col-md-4"><label for="">No of bed</label><input type="number" class="form-control" name="bed" required></div>
+        <div class="col-md-4"><label for="">Cost</label><input type="number" class="form-control"  name="cost" required></div>
+        
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+  </form>
+
+</section>
+{% endblock body %}

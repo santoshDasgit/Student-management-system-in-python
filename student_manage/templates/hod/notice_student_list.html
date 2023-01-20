@@ -1,0 +1,90 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block body %}
+
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Notice</h1>
+
+           <span>
+            <span>Student / <span class="text-secondary">Notice  List</span></span>
+           </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'notice_student' %}" class="btn btn-primary"> Notice add <i class="fa-solid fa-bell ml-2"></i></a>
+        </div>
+    </div>
+</section>
+
+<table class="table table-hover shadow p-3 mb-5 bg-body rounded ">
+    <thead>
+        <tr>
+
+
+            <th scope="col">Id</th>
+
+            <th scope="col">Message</th>
+            <th scope="col">Date</th>
+            <th scope="col">Action</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+   
+        {% for i in data %}
+          
+        <tr>
+
+            <td class='text-dark'>{{i.id}}</td>
+            
+          <td><b>{{i.head}}</b></td>
+          <td>{{i.date}}</td>
+         
+            <td>
+
+
+                <div class="row ">
+                   
+                
+                    <div class="col-6 col-md-2">
+                        <a href="{% url '/notice_student_view' i.id %}" class="btn btn-sm btn-primary bg-success-light mr-1">Views</a>
+                    </div>
+                    <div class="col-6 col-md-2">    <button type='button' class="btn btn-sm btn-danger bg-success-light mr-1" data-toggle="modal" data-target="#exampleModalCenter{{forloop.counter}}"><i
+                        class="fas fa-trash"></i></button></div>
+
+                        
+                        <div class="modal fade" id="exampleModalCenter{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLongTitle">{{i.head}}</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                 <span class='text-danger'>Conform to remove</span>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  
+                                  <a href="{% url 'notice_student_remove' i.id %}" class='btn btn-danger'>Remove</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+                        
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+
+</table> 
+{% endblock body %}

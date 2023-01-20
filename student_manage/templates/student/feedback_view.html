@@ -1,0 +1,30 @@
+{% extends 'header.html' %}
+
+{% block body %}
+{% include 'msg.html' %}
+
+<form action="" method="post" class='shadow p-3 mb-5 bg-white rounded'>
+    <h4 class='text-center text-dark'>View Feedback</h4>
+    {% csrf_token %}
+    {{fm.media}}
+    {{fm.as_p}}
+
+    <div class='shadow-sm p-1 mb-1 bg-white rounded'>
+        <b>Seen Status</b>
+        <ul>
+            <li><span class='text-dark'>{{data.status}}</span></li>
+        </ul>
+    </div>
+    <div class='shadow-sm p-3 mb-5 bg-white rounded'>
+        <b>Replay Status</b>
+        <ul>
+            <li><span class='text-dark'>{{data.replay}}</span></li>
+        </ul>
+    </div>
+
+    <button type="submit" class='btn btn-primary'>Change it</button>
+    <a href="{% url 'student_feedback_list' %}" class='btn btn-danger'>Back</a>
+
+  
+</form>
+{% endblock body %}

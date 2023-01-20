@@ -1,0 +1,176 @@
+{% extends "header.html" %}
+{% load static %}
+{% block body %}
+<section class='index my-5'>
+    <div class="row admin">
+        <div class="col-12">
+            <h1>Wellcome {{request.user.first_name|capfirst}} !</h1>
+
+            <span>Dashbord</span><span class='mx-2'>/</span><span class='text-secondary'> Student Dashbord </span>
+
+        </div>
+    </div>
+ 
+    
+</section>
+
+<section class='student_home'>
+    
+    {% if condition  %}
+    <div class="p-3 mb-2 notification_div shadow p-3 mb-5 bg-white rounded">
+     <p class=' text-center'><i class="fa-regular fa-bell text-dark"></i> <span class='text-primary'>You have some notification from <b>PRINIPLE </b></span> <i class="fa-regular fa-bell text-dark"></i></p>
+       <a href="{% url 'student_notify' %}" class='btn btn-primary' <i class="fa-regular fa-bell"></i> View</a>
+    </div>
+        
+    {% endif %}
+</section>
+
+<section>
+
+    <section>
+        <div class="row">
+          <div class="col-xl-3 col-sm-6 col-12 d-flex ">
+            <div class="card bg-comman w-100 shadow-lg p-3 mb-5 bg-white rounded">
+              <div class="card-body">
+                <div class="db-widgets d-flex justify-content-between align-items-center">
+                  <div class="db-info">
+                    <h6>Total attendance</h6>
+                    <h3>{{attendance}}</h3>
+                  </div>
+                  <div class="db-icon">
+                    <img src="{% static 'images/icon/course.png' %}" alt="Dashboard Icon">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 col-12 d-flex ">
+            <div class="card bg-comman w-100 shadow-lg p-3 mb-5 bg-white rounded">
+              <div class="card-body">
+                <div class="db-widgets d-flex justify-content-between align-items-center">
+                  <div class="db-info">
+                    <h6>Total Teachers of branch</h6>
+                    <h3>{{teacher}}</h3>
+                  </div>
+                  <div class="db-icon">
+                    <img src="{% static 'images/icon/teacher.png' %}" alt="Dashboard Icon">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 col-12 d-flex ">
+            <div class="card bg-comman w-100 shadow-lg p-3 mb-5 bg-white rounded">
+              <div class="card-body">
+                <div class="db-widgets d-flex justify-content-between align-items-center">
+                  <div class="db-info">
+                    <h6>Total quiz</h6>
+                    <h3>  {% if quiz %}
+                        {{quiz}}
+                        {% else %}
+                        0
+                    {% endif %}</h3>
+                  </div>
+                  <div class="db-icon">
+                    <img src="{% static 'images/icon/choose.png' %}" style="width: 64px ;height: 64px;" alt="Dashboard Icon">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 col-12 d-flex ">
+            <div class="card bg-comman w-100 shadow-lg p-3 mb-5 bg-white rounded">
+              <div class="card-body">
+                <div class="db-widgets d-flex justify-content-between align-items-center">
+                  <div class="db-info">
+                    <h6>Total assignment</h6>
+                    <h3>{{assignment}}</h3>
+                  </div>
+                  <div class="db-icon">
+                    <img src="{% static 'images/icon/assignment.png' %}" style="width: 64px ;height: 64px;" alt="Dashboard Icon">
+             
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+      <section class='shadow-sm p-3 mb-5 bg-white rounded'>
+        <h1 class="display-5 fw-bold">Star Students <span class='text-warning'><i class="fa-solid fa-crown"></i></span></h1>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for i in star_student %}
+          <div class="col">
+            <div class="card shadow-sm">
+
+              <img src="{% if i.user.admin.profile_image  %}
+              {{i.user.admin.profile_image.url}}
+              {% else %}
+                {% static "default_dp.jpg" %} {% endif %} " class='w-100 profile' width="100%" height="225" alt="" >
+              <div class="card-body">
+                <ul>
+                  <li><b>Name : </b> {{i.user.admin.first_name|capfirst}} {{i.user.admin.first_name}}</li>
+                  <li><b>Reg no : </b> {{ i.user.admin.username}}</li>
+                  <li><b>Course : </b> {{i.user.course.name}} </li>
+                  <li><b>Branch : </b> {{i.user.branch.name}} </li>
+                  <li><b>Semester :  </b> {{i.user.semester}}</li>
+                </ul>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                   <a href="{% url 'student_details' i.user.admin.id %}" class="btn btn-sm btn-outline-secondary">View</a>
+                  </div>
+                  <small class="text-muted">{{i.date}}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+           
+          {% endfor %}
+           
+          </div>
+      </section>
+
+      <section>
+        <section style='width:100%;overflow-x: scroll;' class="shadow-sm p-3 mb-5 bg-white rounded">
+    
+          <table class="table mt-4" >
+             <h5>Notice list</h5>
+              <thead>
+               <tr>
+                 <th scope="col">no</th>
+                 <th scope="col">Title</th>
+                 <th scope="col">Teacher</th>
+    
+                 <th scope="col">Date</th>
+                 <th scope="col">File</th>
+           
+               </tr>
+             </thead>
+             <tbody>
+                 {% for i in notice_to_teacher %}
+                 
+                 <tr>
+                   <th scope="row">{{forloop.counter}}</th>
+                   <td>{{i.title}}</td>
+                   <td>{{i.teacher.admin.first_name|capfirst}} {{i.teacher.admin.last_name}}</td>
+                   <td>{{i.date}}</td>
+                   <td><a href="{{i.file.url}}" download> download</a></td>
+
+                 </tr>
+                 {% empty %}
+                 <span class="text-danger">Empty Notice</span>
+                 {% endfor %}
+              
+             </tbody>
+           </table>
+         </section>
+      </section>
+      
+{% endblock body %}
+

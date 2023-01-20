@@ -1,0 +1,114 @@
+{% extends 'header.html' %}
+{% load simpletag %}
+{% block body %}
+<section class='index my-3 '>
+    <div class="row admin ">
+        <div class="col-6 col-md-8">
+            <h1>Routine</h1>
+
+            <span>
+                <span>Routine / <span class="text-secondary">Routine add</span></span>
+            </span>
+
+        </div>
+        <div class="col-6 col-md-2 mt-3 ">
+            <a href="{% url 'routine_add' %}" class="btn btn-primary"> Routine add <i
+                    class="fa-solid fa-table ml-2"></i></a>
+
+        </div>
+    </div>
+</section>
+
+{% for i in course %}
+
+
+
+
+
+<section class="subject_list">
+
+    <div class="subject_list_table">
+
+        <a href="{% url 'routine_head_edit' i.id %}" class='text-white'><h5 class=" w-25 bg-secondary text-white p-1 text-center">{{i.course.name}}/{{i.branch.name}}/{{i.sem.name}}</h5></a>
+
+        
+        </h5>
+
+
+        <table class="table table-hover shadow p-3 mb-5 bg-body rounded ">
+            <thead>
+                <tr>
+
+                   
+                    <th scope="col">Time</th>
+
+                    <th scope="col">Monday</th>
+                    <th scope="col">Tuesday</th>
+                    <th scope="col">Wednesday</th>
+                    <th scope="col">Thursday</th>
+                    <th scope="col">Friday</th>
+                    <th scope="col">Saturday</th>
+                    <th scope="col">
+                           Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for j in i.routine_set.all %}
+                <tr>
+             
+                    <td class='text-dark'><b>{{j.start|title}} - {{j.end|title}}</b></td>
+                     {% comment %} {% endcomment %}
+                     {% teacher_ide j.monday as mon %}
+                     {% teacher_name j.monday as mon_teacher %}
+                    <td> {% subject_name j.monday %} <br> {% if mon_teacher != null  %} <a href="{% url 'teacher_details' mon %}"> {% teacher_name j.monday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %} </td>
+                    
+                    {% teacher_ide j.tuesday as tue %}
+                    {% teacher_name j.tuesday as tue_teacher %}
+                    <td> {% subject_name j.tuesday %} <br> {% if tue_teacher != null  %} <a href="{% url 'teacher_details' tue %}">{% teacher_name j.tuesday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %} </td>
+                    
+                    {% teacher_ide j.wednesday as wed %}
+                    {% teacher_name j.wednesday as wed_teacher %}
+                    <td> {% subject_name j.wednesday %} <br> {% if wed_teacher != null  %} <a href="{% url 'teacher_details' wed %}">{% teacher_name j.wednesday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %}</td>
+                   
+                    {% teacher_ide j.thursday as thurs %}
+                    {% teacher_name j.thursday as thurs_teacher %}
+                    <td> {% subject_name j.thursday %} <br> {% if thurs_teacher != null  %} <a href="{% url 'teacher_details' thurs %}">{% teacher_name j.thursday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %}</td>
+                     
+                    {% teacher_ide j.friday as fri %}
+                    {% teacher_name j.friday as fri_teacher %}
+                    <td> {% subject_name j.friday %} <br> {% if fri_teacher != null  %} <a href="{% url 'teacher_details' fri %}">{% teacher_name j.friday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %}</td>
+                   
+                    {% teacher_ide j.saturday as sat %}
+                    {% teacher_name j.saturday as sat_teacher %}
+                    <td> {% subject_name j.saturday %} <br> {% if sat_teacher != null  %}<a href="{% url 'teacher_details' sat %}">{% teacher_name j.saturday %}</a> {% else %} <span class='text-danger'>Not mention</span> {% endif %}</td>
+                    <td>
+                     
+                         
+                                <div class="row ">
+                                  
+                                        <a href="{% url 'routine_update' i.id j.id %}" class="btn btn-sm btn-warning bg-success-light mr-1"><i
+                                            class="fas fa-pen"></i></a>
+                                   
+                                  
+                                        <a href="{% url 'routine_delete' j.id %}"
+                                        class="btn btn-sm bg-danger-light btn-danger"><i class="fas fa-trash"></i></a>
+                               
+                                </div>
+                        </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+
+
+
+
+    </div>
+
+</section>
+
+{% endfor %}
+{% endblock body %}
